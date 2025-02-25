@@ -1,37 +1,32 @@
 import os
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 
 class Config:
-    """Base configuration with common settings."""
-    SECRET_KEY = os.environ.get("SECRET_KEY", os.getenv("MY_KEY"))
+    """Base configuration"""
+    SECRET_KEY = os.getenv("SECRET_KEY", "your_default_secret")
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "postgresql://user:pass@localhost/dbname")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SESSION_COOKIE_HTTPONLY = True
-    REMEMBER_COOKIE_HTTPONLY = True
-    REMEMBER_COOKIE_DURATION = 3600  # 1 hour
 
 class DevelopmentConfig(Config):
-    """Configuration for development."""
+    """Development environment"""
     DEBUG = True
-    SQLALCHEMY_ECHO = True  # Logs SQL queries
+    SQLALCHEMY_DATABASE_URI = os.getenv("DEV_DATABASE_URL")
 
 class TestingConfig(Config):
-    """Configuration for testing."""
+    """Testing environment"""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"  # In-memory DB for tests
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL")
 
 class ProductionConfig(Config):
-    """Configuration for production."""
-    DEBUG = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", "postgresql://user:pass@localhost/dbname")
-    SESSION_COOKIE_SECURE = True  # Secure cookies for production
-    REMEMBER_COOKIE_DURATION = 86400  # 1 day
+    """Production environment"""
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SESSION_COOKIE_SECURE = True
 
-# Dictionary to map configurations
+# Configuration dictionary
 config_dict = {
     "development": DevelopmentConfig,
     "testing": TestingConfig,
