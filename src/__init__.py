@@ -10,6 +10,7 @@ load_dotenv()
 
 db = SQLAlchemy()
 
+
 def create_app():
     """Flask application factory"""
     app = Flask(__name__)
@@ -25,6 +26,7 @@ def create_app():
     app.register_blueprint(user_bp, url_prefix="/users")
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
