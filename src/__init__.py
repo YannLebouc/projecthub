@@ -4,11 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from src.config import config_dict
 from src.controllers.user_controller import user_bp
 from dotenv import load_dotenv
+from src.models import base
 
 # Load environment variables from .env file
 load_dotenv()
 
-db = SQLAlchemy()
+db = SQLAlchemy(model_class=base.Base)
 
 
 def create_app():

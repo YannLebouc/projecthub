@@ -8,7 +8,7 @@ load_dotenv()
 class Config:
     """Base configuration"""
 
-    SECRET_KEY = os.getenv("SECRET_KEY", "your_default_secret")
+    SECRET_KEY = os.getenv("SECRET_KEY")
     DEBUG = False
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
