@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from src.config import config_dict
 from src.controllers.user_controller import user_bp
@@ -10,7 +11,7 @@ from src.models import base
 load_dotenv()
 
 db = SQLAlchemy(model_class=base.Base)
-
+migrate = Migrate()
 
 def create_app():
     """Flask application factory"""
@@ -22,7 +23,7 @@ def create_app():
 
     # Initialize database
     db.init_app(app)
-
+    migrate.init_app(app, db)
     # Initialize blueprints
     app.register_blueprint(user_bp, url_prefix="/users")
 
