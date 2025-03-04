@@ -13,6 +13,7 @@ load_dotenv()
 db = SQLAlchemy(model_class=base.Base)
 migrate = Migrate()
 
+
 def create_app():
     """Flask application factory"""
     app = Flask(__name__)
